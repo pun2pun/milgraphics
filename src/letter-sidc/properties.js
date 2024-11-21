@@ -1,25 +1,31 @@
-var ms = require("milsymbol");
+const ms = require("milsymbol");
 
 module.exports = function(properties, mapping) {
   this.SIDC = this.SIDC.toUpperCase();
 
-  var codingscheme = this.SIDC.charAt(0) != "" ? this.SIDC.charAt(0) : "-";
-  var affiliation = this.SIDC.charAt(1) != "" ? this.SIDC.charAt(1) : "-";
-  var battledimension = this.SIDC.charAt(2) != "" ? this.SIDC.charAt(2) : "-";
-  var status = this.SIDC.charAt(3) != "" ? this.SIDC.charAt(3) : "-";
-  var functionid = (properties.functionid = this.SIDC.substr(4, 6) != ""
+  const codingscheme = this.SIDC.charAt(0) !== "" ? this.SIDC.charAt(0) : "-";
+  const affiliation = this.SIDC.charAt(1) !== "" ? this.SIDC.charAt(1) : "-";
+  const battledimension = this.SIDC.charAt(2) !== "" ? this.SIDC.charAt(2) : "-";
+  const status = this.SIDC.charAt(3) !== "" ? this.SIDC.charAt(3) : "-";
+
+  // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+  const functionid = (properties.functionid = this.SIDC.substr(4, 6) !== ""
     ? this.SIDC.substr(4, 6)
     : "------");
-  var symbolmodifier11 = this.SIDC.charAt(10) != ""
+    
+  const symbolmodifier11 = this.SIDC.charAt(10) !== ""
     ? this.SIDC.charAt(10)
     : "-";
-  var symbolmodifier12 = this.SIDC.charAt(11) != ""
+
+  const symbolmodifier12 = this.SIDC.charAt(11) !== ""
     ? this.SIDC.charAt(11)
     : "-";
-  var countrycode = this.SIDC.substr(12, 2) != ""
+
+  const countrycode = this.SIDC.substr(12, 2) !== ""
     ? this.SIDC.substr(12, 2)
     : "--";
-  var orderofbattle = this.SIDC.charAt(14) != "" ? this.SIDC.charAt(14) : "-";
+
+  const orderofbattle = this.SIDC.charAt(14) !== "" ? this.SIDC.charAt(14) : "-";
 
   if (["H", "S", "J", "K"].indexOf(affiliation) > -1)
     properties.affiliation = mapping.affiliation[0];
@@ -40,14 +46,14 @@ module.exports = function(properties, mapping) {
     properties.dimension = mapping.dimension[3];
 
   //Planned/Anticipated/Suspect symbols should have a dashed outline
-  if (status == "A") {
+  if (status === "A") {
     properties.notpresent = ms._dashArrays.anticipated;
   }
   if (["P", "A", "S", "G", "M"].indexOf(affiliation) > -1) {
     properties.notpresent = ms._dashArrays.pending;
   }
 
-  if (orderofbattle == "X") {
+  if (orderofbattle === "X") {
     properties.graphic = true;
   }
 
@@ -55,13 +61,9 @@ module.exports = function(properties, mapping) {
   //sidc['CIRCLE----'] = ms.geometryConverter.circle;
 
   // Systematic SitaWare compatibility
-  var genericSIDC =
-    this.SIDC.substr(0, 1) +
-    "-" +
-    this.SIDC.substr(2, 1) +
-    "-" +
-    this.SIDC.substr(4, 6);
-  if (["X---C-----", "X---I-----", "X---A-----"].indexOf(genericSIDC) != -1) {
+  const genericSIDC =
+    `${this.SIDC.substr(0, 1)}-${this.SIDC.substr(2, 1)}-${this.SIDC.substr(4, 6)}`;
+  if (["X---C-----", "X---I-----", "X---A-----"].indexOf(genericSIDC) !== -1) {
     properties.graphic = true;
   }
 

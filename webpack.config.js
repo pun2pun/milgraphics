@@ -10,9 +10,12 @@ module.exports = {
     libraryTarget: "umd",
     umdNamedDefine: true
   },
+  
   plugins: [
     new CustomVarLibraryNamePlugin({
       name: "ms"
     })
   ]
 };
+
+

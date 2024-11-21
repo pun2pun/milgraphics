@@ -1,7 +1,7 @@
 /* ***************************************************************************************
 Creating the base of milgraphics by importing milsymbol
 *************************************************************************************** */
-var ms = require("milsymbol");
+const ms = require("milsymbol");
 
 ms.addSIDCgraphics = require("./ms/addsidcgraphics.js");
 

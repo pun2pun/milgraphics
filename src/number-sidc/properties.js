@@ -1,15 +1,16 @@
+// biome-ignore lint/style/noVar: <explanation>
 var ms = require("milsymbol");
 
 module.exports = function(properties, mapping) {
-  var version = this.SIDC.substr(0, 2);
-  var standardIdentity1 = this.SIDC.substr(2, 1);
-  var standardIdentity2 = this.SIDC.substr(3, 1);
-  var symbolSet = this.SIDC.substr(4, 2);
-  var status = this.SIDC.substr(6, 1);
-  var headquartersTaskForceDummy = this.SIDC.substr(7, 1);
-  var echelonMobility = this.SIDC.substr(8, 2);
+  const version = this.SIDC.substr(0, 2);
+  const standardIdentity1 = this.SIDC.substr(2, 1);
+  const standardIdentity2 = this.SIDC.substr(3, 1);
+  const symbolSet = this.SIDC.substr(4, 2);
+  const status = this.SIDC.substr(6, 1);
+  const headquartersTaskForceDummy = this.SIDC.substr(7, 1);
+  const echelonMobility = this.SIDC.substr(8, 2);
 
-  var affiliationMapping = {
+  const affiliationMapping = {
     "0": "Unknown",
     "1": "Unknown",
     "2": "Friend",
@@ -19,7 +20,7 @@ module.exports = function(properties, mapping) {
     "6": "Hostile"
   };
 
-  var dimensionMapping = {
+  const dimensionMapping = {
     "00": "Sea",
     "01": "Air",
     "02": "Air",
@@ -43,18 +44,19 @@ module.exports = function(properties, mapping) {
     "60": "Ground"
   };
 
-  var functionid = (properties.functionid = this.SIDC.substr(10, 10));
+  // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+  const functionid = (properties.functionid = this.SIDC.substr(10, 10));
 
-  properties.context = mapping.context[parseInt(this.SIDC.substr(2, 1))];
+  properties.context = mapping.context[Number.parseInt(this.SIDC.substr(2, 1))];
   properties.affiliation = affiliationMapping[standardIdentity2];
   properties.dimension = dimensionMapping[symbolSet];
 
   //Planned/Anticipated/Suspect symbols should have a dashed outline
-  if (status == "1") properties.notpresent = ms._dashArrays.anticipated;
+  if (status === "1") properties.notpresent = ms._dashArrays.anticipated;
   if (
-    standardIdentity2 == "0" ||
-    standardIdentity2 == "2" ||
-    standardIdentity2 == "5"
+    standardIdentity2 === "0" ||
+    standardIdentity2 === "2" ||
+    standardIdentity2 === "5"
   )
     properties.notpresent = ms._dashArrays.pending;
 

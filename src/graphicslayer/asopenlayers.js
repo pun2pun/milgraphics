@@ -16,7 +16,7 @@ function asOpenLayers(crs) {
       olFeature.getGeometry() &&
       olFeature.getGeometry().getType() == "Point"
     ) {
-      var properties = olFeature.getProperties();
+      var properties = olFeature.getMetadata();
       if (properties.sidc.charAt(0) != "X") {
         //TODO handle sitaware custom graphics
         var milsymbol = this.data.features[i].symbol;

@@ -1,4 +1,4 @@
-var ms = require("milsymbol");
+const ms = require("milsymbol");
 
 module.exports = function(sidc, STD2525) {
   // We modify sidc directly in the called functions so we don't need to return anything.
